@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-""" 
+"""
 Usage:
     THEANO_FLAGS="device=gpu0" python exptTaxiBJ.py [number_of_residual_units]
 """
 from __future__ import print_function
 import os
 import sys
-import cPickle as pickle
+import pickle as pickle
 import time
 import numpy as np
 import h5py
@@ -81,7 +81,7 @@ def read_cache(fname):
     f = h5py.File(fname, 'r')
     num = int(f['num'].value)
     X_train, Y_train, X_test, Y_test = [], [], [], []
-    for i in xrange(num):
+    for i in range(num):
         X_train.append(f['X_train_%i' % i].value)
         X_test.append(f['X_test_%i' % i].value)
     Y_train = f['Y_train'].value
