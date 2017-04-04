@@ -5,7 +5,7 @@ import cPickle as pickle
 import numpy as np
 
 from . import load_stdata
-from ..preprocessing import MinMaxNormalization
+from ..preprocessing import MinMaxNormalization as MinMaxNormalization
 from ..preprocessing import remove_incomplete_days
 from ..config import Config
 from ..datasets.STMatrix import STMatrix

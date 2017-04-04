@@ -5,13 +5,14 @@ import time
 # from temporal_contrast_normalization import TemporalConstrastNormalization
 # from personal_temporal_contrast_normalization import PersonalTemporalConstrastNormalization
 from .minmax_normalization import MinMaxNormalization
+from .minmax_normalization import MinMaxNormalization_01
 from ..utils import string2timestamp
 
 
 def timestamp2vec(timestamps):
     # tm_wday range [0, 6], Monday is 0
-    vec = [time.strptime(str(t[:8], encoding='utf-8'), '%Y%m%d').tm_wday for t in timestamps]  # python3
-    #vec = [time.strptime(t[:8], '%Y%m%d').tm_wday for t in timestamps]  # python2
+    #vec = [time.strptime(str(t[:8], encoding='utf-8'), '%Y%m%d').tm_wday for t in timestamps]  # python3
+    vec = [time.strptime(t[:8], '%Y%m%d').tm_wday for t in timestamps]  # python2
     ret = []
     for i in vec:
         v = [0 for _ in range(7)]
