@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import os
-import cPickle as pickle
+import pickle
 import numpy as np
 
 from . import load_stdata
