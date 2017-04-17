@@ -47,7 +47,7 @@ def ResUnits(residual_unit, nb_filter, repetations=1):
     return f
 
 
-def stresnet(c_conf=(3, 2, 32, 32), p_conf=(3, 2, 32, 32), t_conf=(3, 2, 32, 32), external_dim=8, nb_residual_unit=3):
+def stresnet(c_conf=(3, 2, 32, 32), p_conf=(3, 2, 32, 32), t_conf=(3, 2, 32, 32), external_dim=8, nb_residual_unit=3, nbfilter=64):
     '''
     C - Temporal Closeness
     P - Period
@@ -66,9 +66,9 @@ def stresnet(c_conf=(3, 2, 32, 32), p_conf=(3, 2, 32, 32), t_conf=(3, 2, 32, 32)
             main_inputs.append(input)
             # Conv1
             conv1 = Convolution2D(
-                nb_filter=64, nb_row=3, nb_col=3, border_mode="same")(input)
+                nb_filter=nbfilter, nb_row=3, nb_col=3, border_mode="same")(input)
             # [nb_residual_unit] Residual Units
-            residual_output = ResUnits(_residual_unit, nb_filter=64,
+            residual_output = ResUnits(_residual_unit, nb_filter=nbfilter,
                               repetations=nb_residual_unit)(conv1)
             # Conv2
             activation = Activation('relu')(residual_output)

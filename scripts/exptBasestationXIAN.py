@@ -4,6 +4,8 @@ Usage:
     THEANO_FLAGS="device=gpu0" python exptBasestationXIAN.py
 """
 from __future__ import print_function
+import sys
+sys.path.insert(0, '..')
 import os
 import pickle
 import numpy as np
@@ -31,18 +33,18 @@ lr = 0.0002  # learning rate
 len_closeness = 3  # length of closeness dependent sequence
 len_period = 0  # length of peroid dependent sequence
 len_trend = 0  # length of trend dependent sequence
-nb_residual_unit = 4   # number of residual units
+nb_residual_unit = 1   # number of residual units
 
 nb_flow = 2  # there are two types of flows: new-flow and end-flow
 # divide data into two subsets: Train & Test, of which the test set is the
 # last 10 days
-days_test = 1
+days_test = 4
 len_test = T * days_test
-map_height, map_width = 32, 32  # grid size
+map_height, map_width = 20, 20  # grid size
 # For NYC Bike data, there are 81 available grid-based areas, each of
 # which includes at least ONE bike station. Therefore, we modify the final
 # RMSE by multiplying the following factor (i.e., factor).
-nb_area = 32 * 32
+nb_area = 20 * 20
 m_factor = math.sqrt(1. * map_height * map_width / nb_area)
 print('factor: ', m_factor)
 path_result = 'RET'
@@ -101,7 +103,7 @@ def main():
     history = model.fit(X_train, Y_train,
                         nb_epoch=nb_epoch,
                         batch_size=batch_size,
-                        validation_split=0.1,
+                        validation_split=0.143,
                         callbacks=[early_stopping, model_checkpoint],
                         verbose=1)
     model.save_weights(os.path.join(

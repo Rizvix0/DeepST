@@ -22,7 +22,7 @@ def load_data(T=48, nb_flow=2, len_closeness=None, len_period=None, len_trend=No
               preprocess_name='preprocessing.pkl', meta_data=True):
     assert (len_closeness + len_period + len_trend > 0)
     # load data
-    data, timestamps = load_stdata(os.path.join(DATAPATH, 'BasestationXIAN', 'BaseStations_Xian_1000.h5'))
+    data, timestamps = load_stdata(os.path.join(DATAPATH, 'BasestationXIAN', 'BaseStations_ln.h5'))
     # remove a certain day which does not have 48 timestamps
     data, timestamps = remove_incomplete_days(data, timestamps, T)
     # pause = input("pause")
@@ -63,6 +63,12 @@ def load_data(T=48, nb_flow=2, len_closeness=None, len_period=None, len_trend=No
     XT = np.vstack(XT)
     Y = np.vstack(Y)
     print("XC shape: ", XC.shape, "XP shape: ", XP.shape, "XT shape: ", XT.shape, "Y shape:", Y.shape)
+    # shuffle_array = np.random.permutation(XC.shape[0])
+    shuffle_array = pickle.load(open('../../data/lndata/shuffle_array.pkl', 'rb'))
+    XC = XC[shuffle_array]
+    XP = XP[shuffle_array]
+    XT = XT[shuffle_array]
+    Y = Y[shuffle_array]
     XC_train, XP_train, XT_train, Y_train = XC[:-len_test], XP[:-len_test], XT[:-len_test], Y[:-len_test]
     XC_test, XP_test, XT_test, Y_test = XC[-len_test:], XP[-len_test:], XT[-len_test:], Y[-len_test:]
     # pause = input("pause")
