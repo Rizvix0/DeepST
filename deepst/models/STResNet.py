@@ -30,10 +30,14 @@ def _bn_relu_conv(nb_filter, nb_row, nb_col, subsample=(1, 1), bn=False):
 
 
 def _residual_unit(nb_filter, init_subsample=(1, 1)):
+    flag = True
     def f(input):
         residual = _bn_relu_conv(nb_filter, 3, 3)(input)
         residual = _bn_relu_conv(nb_filter, 3, 3)(residual)
-        return _shortcut(input, residual)
+        if flag == True:
+            return _shortcut(input, residual)
+        else:
+            return residual
     return f
 
 

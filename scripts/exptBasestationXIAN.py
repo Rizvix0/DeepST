@@ -19,6 +19,11 @@ from deepst.config import Config
 import deepst.metrics as metrics
 from deepst.datasets import BasestationXIAN
 np.random.seed(1337)  # for reproducibility
+sys.path.insert(0, '../../')
+from CoreUtils.SendNotification import send_notification
+from CoreUtils import SendNotification
+# SendNotification.http_config = '59.66.107.166'
+SendNotification.http_config = '192.168.34.138'
 
 # parameters
 # data path, you may set your own data path with the global envirmental
@@ -33,7 +38,7 @@ lr = 0.0002  # learning rate
 len_closeness = 3  # length of closeness dependent sequence
 len_period = 0  # length of peroid dependent sequence
 len_trend = 0  # length of trend dependent sequence
-nb_residual_unit = 1   # number of residual units
+nb_residual_unit = 5   # number of residual units
 
 nb_flow = 2  # there are two types of flows: new-flow and end-flow
 # divide data into two subsets: Train & Test, of which the test set is the
@@ -132,7 +137,7 @@ def main():
     model_checkpoint = ModelCheckpoint(
         fname_param, monitor='rmse', verbose=0, save_best_only=True, mode='min')
     history = model.fit(X_train, Y_train, nb_epoch=nb_epoch_cont, verbose=1, batch_size=batch_size, callbacks=[
-                        model_checkpoint], validation_data=(X_test, Y_test))
+                        model_checkpoint])
     pickle.dump((history.history), open(os.path.join(
         path_result, '{}.cont.history.pkl'.format(hyperparams_name)), 'wb'))
     model.save_weights(os.path.join(
@@ -157,3 +162,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    send_notification('deep st', 'deep st finish!')
