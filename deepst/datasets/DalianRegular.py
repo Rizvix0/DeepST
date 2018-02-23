@@ -15,14 +15,14 @@ from ..preprocessing import timestamp2vec
 np.random.seed(1337)  # for reproducibility
 
 # parameters
-DATAPATH = Config().DATAPATH
+DATAPATH = "/home/csi/Git/HumanFlowPrediction/data/dalian_regular/"
 
 
 def load_data(T=48, nb_flow=2, len_closeness=None, len_period=None, len_trend=None, len_test=None,
               preprocess_name='preprocessing.pkl', meta_data=True):
     assert (len_closeness + len_period + len_trend > 0)
     # load data
-    data, timestamps = load_stdata(os.path.join(DATAPATH, 'BasestationXIAN', 'BaseStations_ln.h5'))
+    data, timestamps = load_stdata(os.path.join(DATAPATH, 'dalian_regular.h5'))
     # remove a certain day which does not have 48 timestamps
     data, timestamps = remove_incomplete_days(data, timestamps, T)
     # pause = input("pause")
